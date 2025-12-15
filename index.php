@@ -1,33 +1,27 @@
 <?php
 require_once "autoload.php";
 
-$gestor = new GestorProtectora();
-//Agregamos 50 animales
+$gestor = new Gestor();
+//Agregamos 50 productos
 for ($i=1;$i<26;$i++){
-    $animal = new Mamifero($i, "mam$i", $i*10, 4);
-    $gestor->agregar($animal);
+    $elemento = new Coche($i, "Coche$i", $i*10, 4);
+    $gestor->agregar($elemento);
 }
 for ($i=26;$i<=50;$i++){
-    $animal = new Reptil($i, "rep$i", $i*10, 12);
-    $gestor->agregar($animal);
+    $elemento = new Moto($i, "Moto$i", $i*10, 12);
+    $gestor->agregar($elemento);
 }
 
+//Actualizamos 2 productos
+$gestor->actualizar(10, "nuevoCoche10", 99);
+$gestor->actualizar(20, "nuevaMoto20", 99);
 
-//Actualizamos 2 animales
-$gestor->actualizar(10, "nuevoAnimal10", 99);
-$gestor->actualizar(20, "nuevoAnimal20", 99);
-
-//Eliminamos 2 animales
-if ($gestor->eliminar(30)==true){
-    echo "Animal eliminado correctamente";
-}else{
-    echo "No se ha podido eliminar el Animal";
-}
-
+//Eliminamos 2 productos
+$gestor->eliminar(30);
 $gestor->eliminar(40);
 
 //Listamos
-$animal = $gestor->listar();
+$productos = $gestor->listar();
 ?>
 
 <!DOCTYPE html>
@@ -37,25 +31,24 @@ $animal = $gestor->listar();
 </head>
 <body>
 
-<!-- LISTADO -->
-<h2>Listado de Animales</h2>
+<h2>Listado de Productos</h2>
 
-<?php if (empty($animal)): ?>
-    <p>No hay animales aún.</p>
+<?php if (empty($productos)): ?>
+    <p>No hay productos aún.</p>
 <?php else: ?>
 
 <table border="1" cellpadding="10">
     <tr>
         <th>ID</th>
         <th>Nombre</th>
-        <th>Edad</th>
+        <th>Precio</th>
     </tr>
 
-    <?php foreach ($animal as $p): ?>
+    <?php foreach ($productos as $p): ?>
     <tr>
         <td><?= $p->getId() ?></td>
         <td><?= $p->getNombre() ?></td>
-        <td><?= $p->getEdad() ?></td>
+        <td><?= $p->getPrecio() ?></td>
     </tr>
     <?php endforeach; ?>
 </table>
